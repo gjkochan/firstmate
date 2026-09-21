@@ -572,6 +572,25 @@ test_moved_tag_still_fast_forwards() {
   pass "a tag moved on origin still fast-forwards the branch and is reported with a narrow accept command"
 }
 
+test_moved_tag_accept_command_is_shell_safe() {
+  local home clone out origin_main accept tag
+  home="$TMP_ROOT/spaced home $((HOME_N += 1))"
+  mkdir -p "$home/projects"
+  tag='x;touch${IFS}pwned'
+  clone=$(build_moved_tag_pair "$home" tagmove "$tag")
+  origin_main=$(git -C "$home/work-tagmove" rev-parse HEAD)
+
+  out=$(run_sync "$home" "$clone")
+
+  assert_contains "$out" "tagmove: synced" "the branch still fast-forwards past a moved tag"
+  accept=$(printf '%s\n' "$out" | sed -n "s/^tagmove: tags not updated: .*To accept origin's tags: //p")
+  [ -n "$accept" ] || fail "the tag line carries no accept command"
+  (cd "$home" && eval "$accept") >/dev/null 2>&1 || fail "the suggested accept command failed: $accept"
+  [ ! -e "$home/pwned" ] || fail "the accept command executed shell syntax from the tag name: $accept"
+  [ "$(git -C "$clone" rev-parse "refs/tags/$tag")" = "$origin_main" ] || fail "the accept command did not update the tag"
+  pass "the accept command quotes a spaced clone path and a tag name with shell metacharacters"
+}
+
 test_bootstrap_relays_moved_tags() {
   local home out
   home=$(new_home)
@@ -785,6 +804,7 @@ test_single_project_unresolvable_name_still_skips
 test_whole_fleet_form
 test_bootstrap_relays_recovered_and_stuck
 test_moved_tag_still_fast_forwards
+test_moved_tag_accept_command_is_shell_safe
 test_bootstrap_relays_moved_tags
 test_orphaned_stale_packed_refs_lock_recovers
 test_live_packed_refs_lock_is_never_removed

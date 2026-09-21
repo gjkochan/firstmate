@@ -201,7 +201,7 @@ report_moved_tags() {
   local tag refspecs="" shown="" n=0 more=0 proj_abs
   for tag in $MOVED_TAGS; do
     n=$((n + 1))
-    refspecs="$refspecs +refs/tags/$tag:refs/tags/$tag"
+    refspecs="$refspecs $(printf '%q' "+refs/tags/$tag:refs/tags/$tag")"
     if [ "$n" -le 5 ]; then
       shown="${shown:+$shown, }$tag"
     else
@@ -210,7 +210,7 @@ report_moved_tags() {
   done
   [ "$more" -eq 0 ] || shown="$shown and $more more"
   proj_abs=$(cd "$PROJ" && pwd -P) || proj_abs=$PROJ
-  echo "$label: tags not updated: origin moved $shown; the local copies still point at their old commits (branch refs fetched normally). To accept origin's tags: git -C $proj_abs fetch origin$refspecs"
+  echo "$label: tags not updated: origin moved $shown; the local copies still point at their old commits (branch refs fetched normally). To accept origin's tags: git -C $(printf '%q' "$proj_abs") fetch origin$refspecs"
 }
 
 # Absolute path to $PROJ's packed-refs.lock, or empty when it cannot be resolved.
