@@ -1,0 +1,29 @@
+== setup: origin main advanced 29 commits, current-production tag moved; clone has fetch.pruneTags=true
+$ git -C sam_api fetch origin   (raw git behavior)
+From /var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/origin
+   18319a9..d275393 main               -> origin/main
+ ! [rejected] current-production -> current-production  (would clobber existing tag)
+exit=1
+$ git -C sam_api rev-list --count HEAD..origin/main
+29
+
+== BEFORE (base 259a669) fm-fleet-sync.sh sam_api
+sam_api: skipped: fetch failed
+exit=0
+behind origin/main: 29
+
+== AFTER (this change af00abc) fm-fleet-sync.sh sam_api
+sam_api: tags not updated: origin moved current-production; the local copies still point at their old commits (branch refs fetched normally). To accept origin's tags: git -C /private/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/projects/sam_api fetch origin +refs/tags/current-production:refs/tags/current-production
+sam_api: synced 18319a9..d275393
+(eval):27: PIPESTATUS[0]: parameter not set
+behind origin/main after sync: 0
+local current-production: 18319a9  origin's: d275393  HEAD: d275393
+
+== running suggested accept command: git -C /private/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/projects/sam_api fetch origin +refs/tags/current-production:refs/tags/current-production
+From /var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/origin
+ t [tag update]      current-production -> current-production
+exit=0
+local current-production now: d275393
+== re-run sync
+sam_api: already current
+exit=0

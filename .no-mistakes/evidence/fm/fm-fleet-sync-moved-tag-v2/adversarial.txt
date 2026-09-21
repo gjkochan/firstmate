@@ -1,0 +1,25 @@
+== raw fetch in nonff clone (branch rejected AND tag rejected):
+   d275393..685bfe7 main               -> origin/main
+ ! [rejected] current-production -> current-production  (would clobber existing tag)
+
+== whole-fleet: FM_HOME=home bin/fm-fleet-sync.sh
+diverged: tags not updated: origin moved current-production; the local copies still point at their old commits (branch refs fetched normally). To accept origin's tags: git -C /private/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/projects/diverged fetch origin +refs/tags/current-production:refs/tags/current-production
+diverged: STUCK: on diverged main, 1 commits behind origin/main - needs attention
+nonff: tags not updated: origin moved current-production; the local copies still point at their old commits (branch refs fetched normally). To accept origin's tags: git -C /private/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/projects/nonff fetch origin +refs/tags/current-production:refs/tags/current-production
+nonff: synced d275393..685bfe7
+plain: tags not updated: origin moved current-production; the local copies still point at their old commits (branch refs fetched normally). To accept origin's tags: git -C /private/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/projects/plain fetch origin +refs/tags/current-production:refs/tags/current-production
+plain: synced d275393..685bfe7
+sam_api: tags not updated: origin moved current-production; the local copies still point at their old commits (branch refs fetched normally). To accept origin's tags: git -C /private/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/home/projects/sam_api fetch origin +refs/tags/current-production:refs/tags/current-production
+sam_api: synced d275393..685bfe7
+unreachable: skipped: fetch failed: fatal: '/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/tmp.2Mcw28ixbT/does-not-exist.git' does not appear to be a git repository
+exit=0
+
+diverged: HEAD=4f4fb02 origin/main=685bfe7 local tag=d275393 origin tag=685bfe7
+nonff: HEAD=685bfe7 origin/main=685bfe7 local tag=d275393 origin tag=685bfe7
+plain: HEAD=685bfe7 origin/main=685bfe7 local tag=d275393 origin tag=685bfe7
+
+== nonff re-fixture: clone already tracks origin/main=685bfe7; origin now rewrites main (force-push) and moves the tag again
+$ FM_HOME=home bin/fm-fleet-sync.sh nonff
+nonff: skipped: fetch failed:  ! [rejected] main -> origin/main (non-fast-forward)
+exit=0
+nonff: HEAD=685bfe7 origin/main(tracking)=685bfe7 origin actual=1195c6a
