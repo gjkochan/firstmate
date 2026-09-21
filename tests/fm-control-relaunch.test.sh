@@ -540,6 +540,35 @@ SH
   pass "fm-control relaunch: an armed merge poll stays authenticated and keeps running"
 }
 
+test_traced_relaunch_keeps_an_armed_merge_poll_authenticated() {
+  local dir out rc state url=https://github.com/example/repo/pull/43
+  dir=$(new_case pr-poll-traced rl43)
+  add_ship_task "$dir" rl43 claude
+  state="$dir/home/state"
+  printf '%s\n' "$$" > "$state/.lock"
+  printf '%s on\n' "$$" > "$state/.trace-context-effective"
+  cat > "$dir/fakebin/gh" <<'SH'
+#!/usr/bin/env bash
+case " $* " in
+  *" headRefOid "*) printf '%s\n' 0123456789abcdef0123456789abcdef01234567 ;;
+  *" state "*) printf '%s\n' OPEN ;;
+esac
+SH
+  chmod +x "$dir/fakebin/gh"
+  out=$(PATH="$dir/fakebin:$PATH" FM_HOME="$dir/home" "$ROOT/bin/fm-pr-check.sh" rl43 "$url" 2>&1); rc=$?
+  expect_code 0 "$rc" "arming the merge poll should succeed"$'\n'"$out"
+  fm_pr_poll_artifacts_valid "$state" rl43 "$ROOT/bin/fm-pr-poll.sh" \
+    || fail "the freshly armed merge poll should authenticate"
+
+  out=$(run_control "$dir" rl43 relaunch --note "waiting on review"); rc=$?
+  expect_code 0 "$rc" "traced relaunch should succeed"$'\n'"$out"
+  fm_trace_context_valid "$(meta_field "$dir" rl43 traceparent)" \
+    || fail "a traced relaunch should record the replacement's trace carrier"$'\n'"$(cat "$state/rl43.meta")"
+  fm_pr_poll_artifacts_valid "$state" rl43 "$ROOT/bin/fm-pr-poll.sh" \
+    || fail "a traced relaunch disarmed the merge poll: it no longer authenticates"$'\n'"$(cat "$state/rl43.meta")"
+  pass "fm-control relaunch: a traced relaunch keeps an armed merge poll authenticated"
+}
+
 test_relaunch_serializes_concurrent_durable_metadata_publication() {
   local dir control_pid link_pid rc i=0 traceparent prepare launch_release waiting ready release
   dir=$(new_case metadata-race rl28)
@@ -2256,6 +2285,7 @@ test_relaunch_refuses_before_exit_when_the_composer_state_is_unproven
 test_relaunch_from_linked_home_preserves_recorded_worktree
 test_relaunch_preserves_durable_task_metadata
 test_relaunch_keeps_an_armed_merge_poll_running
+test_traced_relaunch_keeps_an_armed_merge_poll_authenticated
 test_relaunch_serializes_concurrent_durable_metadata_publication
 test_disabled_relaunch_clears_prior_trace_context
 test_relaunch_appends_the_progress_note_to_the_instructions
