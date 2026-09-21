@@ -1,0 +1,64 @@
+lab session: fm-lab-rlpoll-fixtr-40176 (herdr herdr 0.9.0)  root: /Users/greg/.no-mistakes/worktrees/21cba1f6a7d0/01M32BHDHQGJB02MY2HCTZWFQA
+
+== 1. arm merge poll with real gh: bin/fm-pr-check.sh lt1 https://github.com/kunchenguid/firstmate/pull/5114
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  watcher supervision needs Stop-owned automatic recovery; inspect the hook registration and startup status before ending the turn.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/lt1.check.sh
+poll authenticates before relaunch: yes
+--- lt1.meta before relaunch:
+window=fm-lab-rlpoll-fixtr-40176:w1:p2
+endpoint_task_id=lt1
+worktree=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.OPtdtg/wt
+project=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.OPtdtg/proj
+harness=codex
+kind=ship
+mode=no-mistakes
+yolo=off
+model=default
+effort=default
+backend=herdr
+herdr_session=fm-lab-rlpoll-fixtr-40176
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+pr=https://github.com/kunchenguid/firstmate/pull/5114
+pr_head=5a4a872a109411a650e58e072aacb8cf4ebea043
+
+== 2. relaunch on the real Herdr pane: bin/fm-control.sh lt1 relaunch --note ... (trace=on)
+warning: /var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.OPtdtg/home/data/lt1/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched lt1 harness=codex from=codex model=default effort=default backend=herdr endpoint=fm-lab-rlpoll-fixtr-40176:w1:p2 worktree=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.OPtdtg/wt
+relaunch exit=0
+replacement harness launched in the Herdr pane: yes
+--- lt1.meta after relaunch:
+window=fm-lab-rlpoll-fixtr-40176:w1:p2
+endpoint_task_id=lt1
+worktree=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.OPtdtg/wt
+project=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.OPtdtg/proj
+harness=codex
+kind=ship
+mode=no-mistakes
+yolo=off
+tasktmp=/tmp/fm-lt1
+model=default
+effort=default
+spawn_gen=s1790007305.51901.16718
+backend=herdr
+herdr_session=fm-lab-rlpoll-fixtr-40176
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+control_relaunch_tx=50822.20260921T161504Z.2900
+traceparent=00-e141b928822bbff9bbcd3a8900932a20-ab5886d4ee6ffa3a-01
+pr=https://github.com/kunchenguid/firstmate/pull/5114
+pr_head=5a4a872a109411a650e58e072aacb8cf4ebea043
+poll authenticates after relaunch: yes
+
+== 3. one real watcher run: bin/fm-watch.sh
+watch exit=0
+check: /var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.OPtdtg/home/state/lt1.check.sh: merged
+RESULT: PASS - watcher ran the merge poll after relaunch and reported the merge

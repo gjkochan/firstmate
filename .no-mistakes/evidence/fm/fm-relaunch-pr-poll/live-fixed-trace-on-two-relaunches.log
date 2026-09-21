@@ -1,0 +1,67 @@
+lab session: fm-lab-rlpoll-twice-23567 (herdr herdr 0.9.0)  root: /Users/greg/.no-mistakes/worktrees/21cba1f6a7d0/01M32BHDHQGJB02MY2HCTZWFQA
+
+== 1. arm merge poll with real gh: bin/fm-pr-check.sh lt1 https://github.com/kunchenguid/firstmate/pull/5141
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  watcher supervision needs Stop-owned automatic recovery; inspect the hook registration and startup status before ending the turn.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/lt1.check.sh
+poll authenticates before relaunch: yes
+--- lt1.meta before relaunch:
+window=fm-lab-rlpoll-twice-23567:w1:p2
+endpoint_task_id=lt1
+worktree=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.35gm3e/wt
+project=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.35gm3e/proj
+harness=codex
+kind=ship
+mode=no-mistakes
+yolo=off
+model=default
+effort=default
+backend=herdr
+herdr_session=fm-lab-rlpoll-twice-23567
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+pr=https://github.com/kunchenguid/firstmate/pull/5141
+pr_head=454dba3170d3a0cd7dd0c75191fbfa7f9aba53ea
+
+== 2. relaunch on the real Herdr pane: bin/fm-control.sh lt1 relaunch --note ... (trace=on)
+warning: /var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.35gm3e/home/data/lt1/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched lt1 harness=codex from=codex model=default effort=default backend=herdr endpoint=fm-lab-rlpoll-twice-23567:w1:p2 worktree=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.35gm3e/wt
+relaunch 1 exit=0
+error: task lt1's composer visibly holds pending text; refusing to type the /quit exit command because it would concatenate onto that text. Clear or submit the pending text, then retry 'relaunch'
+error: relaunch of lt1 failed while stopping the old agent, which is still running; its original instructions were restored
+relaunch 2 exit=1
+replacement harness launched: NO
+--- lt1.meta after relaunch:
+window=fm-lab-rlpoll-twice-23567:w1:p2
+endpoint_task_id=lt1
+worktree=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.35gm3e/wt
+project=/var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.35gm3e/proj
+harness=codex
+kind=ship
+mode=no-mistakes
+yolo=off
+tasktmp=/tmp/fm-lt1
+model=default
+effort=default
+spawn_gen=s1790007336.32932.3978
+backend=herdr
+herdr_session=fm-lab-rlpoll-twice-23567
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+control_relaunch_tx=31767.20260921T161535Z.578
+traceparent=00-a672bec8e87135f1dce32216a854ec22-1c47a96f74d6bfd9-01
+pr=https://github.com/kunchenguid/firstmate/pull/5141
+pr_head=454dba3170d3a0cd7dd0c75191fbfa7f9aba53ea
+poll authenticates after relaunch: yes
+
+== 3. one real watcher run: bin/fm-watch.sh
+watch exit=0
+check: /var/folders/j7/wvsh7v391_qdcsd9qk_wclr00000gn/T/fm-rlpoll.35gm3e/home/state/lt1.check.sh: merged
+RESULT: PASS - watcher ran the merge poll after relaunch and reported the merge
