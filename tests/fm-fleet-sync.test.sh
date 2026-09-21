@@ -576,6 +576,7 @@ test_moved_tag_accept_command_is_shell_safe() {
   local home clone out origin_main accept tag
   home="$TMP_ROOT/spaced home $((HOME_N += 1))"
   mkdir -p "$home/projects"
+  # shellcheck disable=SC2016 # The tag name must carry unexpanded shell syntax.
   tag='x;touch${IFS}pwned'
   clone=$(build_moved_tag_pair "$home" tagmove "$tag")
   origin_main=$(git -C "$home/work-tagmove" rev-parse HEAD)
